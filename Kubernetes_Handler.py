@@ -12,9 +12,19 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
     filemode="a")
 
 def clean_resource_name(name: str) -> str:
-    """Simplify Kubernetes resource names by removing unique identifiers."""
-    logging.info(f"Cleaned resource name")
-    return re.sub(r"-[a-z0-9]{6,10}$", "", name)
+    try:
+        # Split the string by '-' and dynamically extract the base name
+        parts = name.split('-')
+        if len(parts) > 2:  # Ensure the name has enough segments
+            base_name = '-'.join(parts[:-2])  # Keep all but the last 2 segments
+        else:
+            base_name = name  # If too few segments, return the whole name
+        logging.info(f"Cleaned resource name: {base_name}")
+        return base_name
+    except Exception as e:
+        logging.error(f"Error in cleaning resource name '{name}': {e}")
+        return name  # Fallback to the original name if an error occurs
+
 
 
 def get_kubectl_events(namespace=None):
