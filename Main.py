@@ -6,7 +6,7 @@ from Kubernetes_Handler import (
     get_kubectl_events,
     handle_kubernetes_action
 )
-from GPT_Handler import correct_resource, correct_action, process_query_with_gpt
+from Gpt_Handler import correct_resource, correct_action, process_query_with_gpt
 import json
 import logging 
 
