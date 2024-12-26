@@ -127,10 +127,6 @@ The frontend is a React-based responsive web application that communicates with 
 ### Backend Setup
 1. Clone the repository.
 2. Navigate to the backend directory.
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
 4. Set your OpenAI API key in `OpenAI_Integration.py`.
 5. Start the Flask server:
    ```bash
