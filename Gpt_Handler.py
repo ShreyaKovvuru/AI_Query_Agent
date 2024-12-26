@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
     filemode="a")
 
 # Set up OpenAI API key
-openai.api_key = OPEN_AI_API_KEY
+openai.api_key = OPENAI_API_KEY
 
 SUPPORTED_RESOURCES = [ "pods", "services", "configmaps", "secrets", "deployments",
     "replicasets", "statefulsets", "nodes", "persistentvolumes", "persistentvolumeclaims", "events", "namespaces","contexts"]
