@@ -1,0 +1,5 @@
+kubernetes
+openai
+flask
+pydantic
+flask-cors
