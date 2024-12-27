@@ -13,12 +13,12 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 
 def clean_resource_name(name: str) -> str:
     try:
-        # Split the string by '-' and dynamically extract the base name
-        parts = name.split('-')
-        if len(parts) > 2:  # Ensure the name has enough segments
-            base_name = '-'.join(parts[:-2])  # Keep all but the last 2 segments
+        # Use regex to extract the meaningful base name
+        match = re.match(r'^([a-zA-Z]+(?:-[a-zA-Z]+)*)', name)
+        if match:
+            base_name = match.group(0)  # Extract the meaningful part
         else:
-            base_name = name  # If too few segments, return the whole name
+            base_name = name  # Fallback if no match is found
         logging.info(f"Cleaned resource name: {base_name}")
         return base_name
     except Exception as e:
