@@ -132,6 +132,13 @@ The frontend is a React-based responsive web application that communicates with 
    ```bash
    python Main.py
    ```
+## Installation
+
+To install the dependencies for this project, run the following command:
+
+```bash
+pip install -r requirements.txt
+```
 
 ### Frontend Setup
 1. Navigate to the frontend directory.
@@ -143,7 +150,17 @@ The frontend is a React-based responsive web application that communicates with 
    ```bash
    npm start
    ```
+## Installation for React Dependencies
 
+To install the dependencies for the React part of this project, run the following commands:
+
+1. Install React:
+   ```bash
+   npm install react react-dom
+   ```
+   ```bash
+   npm install axios
+   ```
 ---
 
 ## API Endpoints
