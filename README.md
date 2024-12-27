@@ -127,8 +127,16 @@ The frontend is a React-based responsive web application that communicates with 
 ### Backend Setup
 1. Clone the repository.
 2. Navigate to the backend directory.
-4. Set your OpenAI API key in `OpenAI_Integration.py`.
-5. Start the Flask server:
+4. Set your OpenAI API key in `Gpt_Handler.py`.
+5. Run Kubernetes.py file using the below command : 
+   ```bash
+   python Kubernetes_Handler.py
+   ```
+6. Run Gpt_Handler.py file using the below command : 
+   ```bash
+   python Gpt_Handler.py
+   ``` 
+7. Start the Flask server:
    ```bash
    python Main.py
    ```
