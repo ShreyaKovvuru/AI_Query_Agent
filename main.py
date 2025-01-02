@@ -20,26 +20,26 @@ app = Flask(__name__)
 # CORS(app)
 
 # Load Kubernetes configuration
-def load_kubernetes_config():
-    try:
-        config.load_incluster_config()
-        logging.info("Loaded in-cluster Kubernetes configuration.")
-    except config.ConfigException:
-        try:
-            kube_config_path = os.environ.get('KUBECONFIG', '~/.kube/config')
-            config.load_kube_config(config_file=kube_config_path)
-        except config.ConfigException:
-            logging.error("Could not configure Kubernetes connection.")
-            raise RuntimeError("Could not configure Kubernetes connection.")
+# def load_kubernetes_config():
+#     try:
+#         config.load_incluster_config()
+#         logging.info("Loaded in-cluster Kubernetes configuration.")
+#     except config.ConfigException:
+#         try:
+#             kube_config_path = os.environ.get('KUBECONFIG', '~/.kube/config')
+#             config.load_kube_config(config_file=kube_config_path)
+#         except config.ConfigException:
+#             logging.error("Could not configure Kubernetes connection.")
+#             raise RuntimeError("Could not configure Kubernetes connection.")
 
-load_kubernetes_config()
+# load_kubernetes_config()
 
 
-# # Load Kubernetes configuration
-# try:
-#     config.load_kube_config()
-# except Exception as e:
-#     logging.error(f"Failed to load kubeconfig: {e}")
+# Load Kubernetes configuration
+try:
+    config.load_kube_config()
+except Exception as e:
+    logging.error(f"Failed to load kubeconfig: {e}")
 
 # Set the OpenAI API key from the environment variable
 openai.api_key = os.getenv("OPENAI_API_KEY")
