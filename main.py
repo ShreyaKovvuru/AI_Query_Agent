@@ -67,7 +67,7 @@ def get_kubectl_events(namespace=None):
 
         # Execute the command and capture output
         logging.info("Executing: %s", " ".join(command))
-        result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
 
         if result.returncode != 0:
             logging.error("Error fetching events: %s", result.stderr)
