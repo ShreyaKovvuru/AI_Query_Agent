@@ -18,8 +18,9 @@ try:
 except Exception as e:
     logging.error(f"Failed to load kubeconfig: {e}")
 
-# Fetch the OpenAI API key from the environment variable
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# Set the OpenAI API key from the environment variable
+openai.api_key = os.environ["OPENAI_API_KEY"]
+
 
 # Check if the API key is not set
 if not openai.api_key:
