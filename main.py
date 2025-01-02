@@ -42,7 +42,7 @@ logging.basicConfig(
 )
 
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
 
 
 # Define the Pydantic model for response format
