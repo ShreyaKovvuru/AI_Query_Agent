@@ -10,6 +10,30 @@ import openai
 import json
 import os
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    filename="agent.log",
+    filemode="a"
+)
+
+app = Flask(__name__)
+# CORS(app)
+
+# Load Kubernetes configuration
+def load_kubernetes_config():
+    try:
+        config.load_incluster_config()
+        logging.info("Loaded in-cluster Kubernetes configuration.")
+    except config.ConfigException:
+        try:
+            kube_config_path = os.environ.get('KUBECONFIG', '~/.kube/config')
+            config.load_kube_config(config_file=kube_config_path)
+        except config.ConfigException:
+            logging.error("Could not configure Kubernetes connection.")
+            raise RuntimeError("Could not configure Kubernetes connection.")
+
+load_kubernetes_config()
 
 
 # Load Kubernetes configuration
@@ -19,7 +43,7 @@ except Exception as e:
     logging.error(f"Failed to load kubeconfig: {e}")
 
 # Set the OpenAI API key from the environment variable
-openai.api_key = os.environ["OPENAI_API_KEY"]
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 # Check if the API key is not set
@@ -33,17 +57,8 @@ SUPPORTED_RESOURCES = [ "pods", "services", "configmaps", "secrets", "deployment
 SUPPORTED_ACTIONS = ["list", "count", "status", "delete", "apply", "describe", "logs", "watch","config_view","version"]
 
 
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    filename="agent.log",
-    filemode="a"
-)
-
-app = Flask(__name__)
-# CORS(app)
-
+class QueryRequest(BaseModel):
+    query:str
 
 # Define the Pydantic model for response format
 class QueryResponse(BaseModel):
