@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
 from pydantic import BaseModel, ValidationError
-from flask_cors import CORS
 from kubernetes import client, config, watch
 import logging
 import re
