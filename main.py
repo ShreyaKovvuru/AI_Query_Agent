@@ -35,11 +35,11 @@ def load_kubernetes_config():
 load_kubernetes_config()
 
 
-# Load Kubernetes configuration
-try:
-    config.load_kube_config()
-except Exception as e:
-    logging.error(f"Failed to load kubeconfig: {e}")
+# # Load Kubernetes configuration
+# try:
+#     config.load_kube_config()
+# except Exception as e:
+#     logging.error(f"Failed to load kubeconfig: {e}")
 
 # Set the OpenAI API key from the environment variable
 openai.api_key = os.getenv("OPENAI_API_KEY")
