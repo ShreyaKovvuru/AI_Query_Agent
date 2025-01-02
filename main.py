@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from pydantic import BaseModel, ValidationError
 from kubernetes import client, config, watch
@@ -8,7 +9,7 @@ import subprocess
 import openai
 import json
 import os
-from dotenv import load_dotenv
+
 
 # Load environment variables from .env file
 load_dotenv()
