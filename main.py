@@ -17,7 +17,7 @@ import os
 config.load_kube_config()
 
 # Set up OpenAI API key
-openai.api_key = OPENAI_API_KEY
+openai.api_key = os.getenv("OPENAI_API_KEY", "your-default-key")
 
 SUPPORTED_RESOURCES = [ "pods", "services", "configmaps", "secrets", "deployments",
     "replicasets", "statefulsets", "nodes", "persistentvolumes", "persistentvolumeclaims", "events", "namespaces","contexts"]
