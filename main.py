@@ -7,17 +7,25 @@ import re
 import difflib
 import subprocess 
 import openai
-import logging
 import json
 import os
 
 
 
 # Load Kubernetes configuration
-config.load_kube_config()
+try:
+    config.load_kube_config()
+except Exception as e:
+    logging.error(f"Failed to load kubeconfig: {e}")
 
-# Set up OpenAI API key
-openai.api_key = os.getenv("OPENAI_API_KEY", "your-default-key")
+# Fetch the OpenAI API key from the environment variable
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
+# Check if the API key is not set
+if not openai.api_key:
+    logging.error("OPENAI_API_KEY environment variable is not set.")
+    raise EnvironmentError("The OPENAI_API_KEY environment variable is required but not set.")
+
 
 SUPPORTED_RESOURCES = [ "pods", "services", "configmaps", "secrets", "deployments",
     "replicasets", "statefulsets", "nodes", "persistentvolumes", "persistentvolumeclaims", "events", "namespaces","contexts"]
