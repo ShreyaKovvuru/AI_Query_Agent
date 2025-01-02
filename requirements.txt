@@ -1,6 +1,5 @@
-kubernetes>=23.6.0
-openai>=0.27.0
-flask>=2.2.0
-pydantic>=1.10.0
-flask-cors>=3.0.10
+kubernetes
+openai
+flask
+pydantic
 
