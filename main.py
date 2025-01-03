@@ -33,8 +33,7 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 # Check if the API key is not set
 if not openai.api_key:
-    logging.error("OPENAI_API_KEY environment variable is not set.")
-    raise EnvironmentError("The OPENAI_API_KEY environment variable is required but not set.")
+    print("Warning: OPENAI_API_KEY is not set. Ensure it is set during deployment.")
 
 
 # Check if the API key is not set
