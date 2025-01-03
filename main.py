@@ -29,11 +29,12 @@ except Exception as e:
     logging.error(f"Failed to load kubeconfig: {e}")
 
 # Set the OpenAI API key from the environment variable
+load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 # Check if the API key is not set
 if not openai.api_key:
-    load_dotenv()
-    openai.api_key = os.getenv("OPENAI_API_KEY")
+    logging.error("OPENAI_API_KEY environment variable is not set.")
+    raise EnvironmentError("The OPENAI_API_KEY environment variable is required but not set.")
 
 
 # Check if the API key is not set
@@ -331,14 +332,21 @@ def process_query_with_gpt(query: str) -> dict:
 
         # GPT-4 API call
         #openai.ChatCompletion.create
-        logging.info("Calling GPT-4 API...")
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": query}
-            ]
-        )
+        try:
+            logging.info("Calling GPT-4 API...")
+            response = openai.ChatCompletion.create(
+              model="gpt-4-turbo",
+              messages=[
+              {"role": "system", "content": system_prompt},
+              {"role": "user", "content": query}
+              ]
+            )
+
+        except openai.error.AuthenticationError:
+            print("Authentication Error: Please check your API key.")
+        except openai.error.OpenAIError as e:
+            print(f"OpenAI API Error: {e}")
+
 
         # Log the full response
         logging.info(f"Full GPT-4 API response: {response}")
