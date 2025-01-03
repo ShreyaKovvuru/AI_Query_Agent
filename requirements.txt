@@ -4,4 +4,4 @@ requests
 pydantic
 kubernetes
 python-dotenv
-flask_cors
+Flask-Cors
