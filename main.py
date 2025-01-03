@@ -480,33 +480,42 @@ def handle_query():
             watch_mode
         )
 
-        if not isinstance(kube_data, str):
-            kube_data = json.dumps(kube_data, default=str)
+        # if not isinstance(kube_data, str):
+        #     kube_data = json.dumps(kube_data, default=str)
 
-        try:
-            parsed_answer = json.loads(kube_data)
-        except json.JSONDecodeError as e:
+        # try:
+        #     parsed_answer = json.loads(kube_data)
+        # except json.JSONDecodeError as e:
             
-          if isinstance(kube_data, str):
+        #   if isinstance(kube_data, str):
+        #     kube_data = str(kube_data)
+            
+        #     response = {
+        #       "query": query,
+        #       "answer": kube_data  # Use the parsed JSON object
+        #     }
+        #     logging.info(f"Response: {response}")  
+        #     return response, 200
+        #   else:    
+        #     return jsonify({"error": "Failed to parse answer as JSON.", "details": str(e)}), 500
+        
+        # response = {
+        #     "query": query,
+        #     "answer": parsed_answer  # Use the parsed JSON object
+        # }
+        
+        
+        # logging.info(f"Response: {response}")
+        # return jsonify(response), 200
+
+        # Ensure ⁠ kube_data ⁠ is converted to a string
+        if not isinstance(kube_data, str):
             kube_data = str(kube_data)
-            
-            response = {
-              "query": query,
-              "answer": kube_data  # Use the parsed JSON object
-            }
-            logging.info(f"Response: {response}")  
-            return response, 200
-          else:    
-            return jsonify({"error": "Failed to parse answer as JSON.", "details": str(e)}), 500
-        
-        response = {
-            "query": query,
-            "answer": parsed_answer  # Use the parsed JSON object
-        }
-        
-        
-        logging.info(f"Response: {response}")
-        return jsonify(response), 200
+
+        # Create the response using the Pydantic model
+        response = QueryResponse(query=query, answer=kube_data)
+        return jsonify(response.dict())
+
        
     except ValidationError as ve:
         # Handle Pydantic validation errors
