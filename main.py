@@ -526,4 +526,4 @@ def handle_query():
         return jsonify({"error": f"An internal error occurred: {str(e)}"}), 500
 if __name__ == "__main__":
         logging.info("Starting Flask application.")
-        app.run(host="0.0.0.0", port=8000)    
+        app.run(host="0.0.0.0", port=8501)    
