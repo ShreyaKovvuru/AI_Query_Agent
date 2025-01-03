@@ -6,7 +6,7 @@ The Cleric AI_Query Agent is a comprehensive application that integrates a Flask
 ---
 
 ## Features
--- Responsive Frontend: React-based UI with Axios integration for seamless query handling.
+-- Responsive Frontend: React-based UI with Axios integration for seamless query handling.This is the Repository Link : https://github.com/ShreyaKovvuru/React_Cleric_Agent
 - Natural Language Query Processing:Leverages OpenAI GPT-4 for interpreting user queries and handling spelling mistakes etc.
 - Kubernetes Resource Management: Handles actions like output_formatting , counting, listing, describing , checking configurations, fetching logs, fetching status, version information and watching resources .
 - Error Handling and Logging: Comprehensive logging and error reporting in both backend and frontend.
@@ -127,16 +127,8 @@ The frontend is a React-based responsive web application that communicates with 
 ### Backend Setup
 1. Clone the repository.
 2. Navigate to the backend directory.
-4. Set your OpenAI API key in `Gpt_Handler.py`.
-5. Run Kubernetes.py file using the below command : 
-   ```bash
-   python Kubernetes_Handler.py
-   ```
-6. Run Gpt_Handler.py file using the below command : 
-   ```bash
-   python Gpt_Handler.py
-   ``` 
-7. Start the Flask server:
+4. Set your OpenAI API key in `main.py`.
+5. Start the Flask server:
    ```bash
    python Main.py
    ```
