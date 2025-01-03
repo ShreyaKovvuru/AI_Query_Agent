@@ -419,22 +419,22 @@ def process_query_with_gpt(query: str) -> dict:
         return {"error": f"Error processing query with GPT-4: {e}"}
 
 
-def beautify_json(json_input):
-    try:
+# def beautify_json(json_input):
+#     try:
         
-        # If input is a dictionary, no need to parse it
-        if isinstance(json_input, dict):
-            json_data = json_input
-        else:
-            # Parse the JSON string to a Python dictionary
-            json_data = json.loads(json_input)
+#         # If input is a dictionary, no need to parse it
+#         if isinstance(json_input, dict):
+#             json_data = json_input
+#         else:
+#             # Parse the JSON string to a Python dictionary
+#             json_data = json.loads(json_input)
         
-        # Convert the dictionary back to a formatted JSON string
-        pretty_json = json.dumps(json_data, indent=4)
-        return pretty_json
-    except (json.JSONDecodeError, TypeError) as e:
-        logging.error(f"Error beautifying JSON: {str(e)}")
-        return json_input  # Return the original input if an error occurs
+#         # Convert the dictionary back to a formatted JSON string
+#         pretty_json = json.dumps(json_data, indent=4)
+#         return pretty_json
+#     except (json.JSONDecodeError, TypeError) as e:
+#         logging.error(f"Error beautifying JSON: {str(e)}")
+#         return json_input  # Return the original input if an error occurs
 
 
 @app.route('/query', methods=['POST'])
@@ -448,14 +448,17 @@ def handle_query():
         query = request_data.get('query')
         if not query:
             logging.error("Query is missing in the request.")
-            return jsonify({"error": "Query is missing in the request."}), 400
+            response = QueryResponse(query=query, answer="query is missing in the request")
+            return jsonify(response.dict()), 200
 
         # Process the query using GPT-4
         logging.info(f"Processing query: {query}")
         gpt_response = process_query_with_gpt(query)
         if "error" in gpt_response:
             logging.error(f"GPT-4 processing error: {gpt_response['error']}")
-            return jsonify({"error": gpt_response["error"]}), 400
+            response = QueryResponse(query=query, answer="Error in the query response")
+            return jsonify(response.dict()), 200
+
 
         # Extract action parameters
         action = gpt_response["action"]
@@ -520,10 +523,14 @@ def handle_query():
     except ValidationError as ve:
         # Handle Pydantic validation errors
         logging.error(f"Pydantic validation error: {ve}")
-        return jsonify({"error": "Validation error", "details": ve.errors()}), 400
+        response = QueryResponse(query=query, answer="Validation Error")
+        return jsonify(response.dict()), 200
+
     except Exception as e:
         logging.error(f"Unhandled exception: {str(e)}")
-        return jsonify({"error": f"An internal error occurred: {str(e)}"}), 500
+        response = QueryResponse(query=query, answer="Internal Error")
+        return jsonify(response.dict()), 200
+
 if __name__ == "__main__":
         logging.info("Starting Flask application.")
         app.run()    
