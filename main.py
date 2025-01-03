@@ -1,18 +1,15 @@
-from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from pydantic import BaseModel, ValidationError
 from kubernetes import client, config, watch
+from dotenv import load_dotenv
+import openai
 import logging
 import re
 import difflib
 import subprocess 
-import openai
 import json
 import os
 
-
-# Load environment variables from .env file
-load_dotenv()
 
 logging.basicConfig(
     level=logging.INFO,
@@ -24,36 +21,25 @@ logging.basicConfig(
 app = Flask(__name__)
 # CORS(app)
 
-# Load Kubernetes configuration
-# def load_kubernetes_config():
-#     try:
-#         config.load_incluster_config()
-#         logging.info("Loaded in-cluster Kubernetes configuration.")
-#     except config.ConfigException:
-#         try:
-#             kube_config_path = os.environ.get('KUBECONFIG', '~/.kube/config')
-#             config.load_kube_config(config_file=kube_config_path)
-#         except config.ConfigException:
-#             logging.error("Could not configure Kubernetes connection.")
-#             raise RuntimeError("Could not configure Kubernetes connection.")
-
-# load_kubernetes_config()
-
 
 # Load Kubernetes configuration
 try:
-    config.load_kube_config()
+    config.load_kube_config(os.path.expanduser("~/.kube/config"))
 except Exception as e:
     logging.error(f"Failed to load kubeconfig: {e}")
 
 # Set the OpenAI API key from the environment variable
 openai.api_key = os.getenv("OPENAI_API_KEY")
+# Check if the API key is not set
+if not openai.api_key:
+    load_dotenv()
+    openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 # Check if the API key is not set
-if not openai.api_key:
-    logging.error("OPENAI_API_KEY environment variable is not set.")
-    raise EnvironmentError("The OPENAI_API_KEY environment variable is required but not set.")
+#if not openai.api_key:
+#    logging.error("OPENAI_API_KEY environment variable is not set.")
+#    raise EnvironmentError("The OPENAI_API_KEY environment variable is required but not set.")
 
 
 SUPPORTED_RESOURCES = [ "pods", "services", "configmaps", "secrets", "deployments",
@@ -344,9 +330,10 @@ def process_query_with_gpt(query: str) -> dict:
         """
 
         # GPT-4 API call
+        #openai.ChatCompletion.create
         logging.info("Calling GPT-4 API...")
         response = openai.ChatCompletion.create(
-            model="gpt-4-turbo",
+            model="gpt-4",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": query}
