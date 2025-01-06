@@ -332,15 +332,15 @@ def process_query_with_gpt(query: str) -> dict:
 
         # GPT-4 API call
         #openai.ChatCompletion.create
-        try:
-            logging.info("Calling GPT-4 API...")
-            response = openai.ChatCompletion.create(
+      
+        logging.info("Calling GPT-4 API...")
+        response = openai.ChatCompletion.create(
               model="gpt-4-turbo",
               messages=[
               {"role": "system", "content": system_prompt},
               {"role": "user", "content": query}
               ]
-            )
+        )
 
         # Log the full response
         logging.info(f"Full GPT-4 API response: {response}")
