@@ -342,12 +342,6 @@ def process_query_with_gpt(query: str) -> dict:
               ]
             )
 
-        except openai.error.AuthenticationError:
-            print("Authentication Error: Please check your API key.")
-        except openai.error.OpenAIError as e:
-            print(f"OpenAI API Error: {e}")
-
-
         # Log the full response
         logging.info(f"Full GPT-4 API response: {response}")
 
