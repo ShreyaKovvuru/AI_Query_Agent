@@ -1,8 +1,8 @@
 streamlit
-openai
-Flask
-requests
-pydantic
-kubernetes
-python-dotenv
+openai==0.28.0
+Flask==3.0.3
+requests==2.32.2
+pydantic==2.5.3
+kubernetes==31.0.0
+python-dotenv==1.0.1
 Flask-Cors
