@@ -1,7 +1,7 @@
-# Cleric AI_Query Agent
+# AI_Query Agent
 
 ## Overview
-The Cleric AI_Query Agent is a comprehensive application that integrates a Flask-based backend, OpenAI GPT-4, Kubernetes APIs, and a React-based responsive frontend. It enables users to interact with Kubernetes clusters by sending natural language queries through an intuitive user interface. The queries are processed to determine the desired actions and resources, which are then executed on the Kubernetes cluster, and the results are returned in a structured, readable format.
+The AI_Query Agent is a comprehensive application that integrates a Flask-based backend, OpenAI GPT-4, Kubernetes APIs, and a React-based responsive frontend. It enables users to interact with Kubernetes clusters by sending natural language queries through an intuitive user interface. The queries are processed to determine the desired actions and resources, which are then executed on the Kubernetes cluster, and the results are returned in a structured, readable format.
 
 ---
 
