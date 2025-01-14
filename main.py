@@ -964,13 +964,13 @@ def process_query_with_gpt(query: str) -> dict:
                 "output_format": None,
                 "watch_mode": False,
             }   
-        system_prompt = """
+        system_prompt = """ 
         You are a Kubernetes AI assistant. Extract the following details from the user's query:
         - 'action': one of (list, count, status, delete, apply, describe, logs, watch)
         - 'resource': one of (pods, services, configmaps, secrets, deployments, replicasets, statefulsets, nodes, persistentvolumes, persistentvolumeclaims, events, namespaces, logs)
-        - 'namespace': default if unspecified
+        - 'namespace': default to 'default' if unspecified, except when the query mentions 'cluster,' in which case do not assign a default namespace.
         - 'name': optional for specific resources
-        Ensure your response is a valid JSON object with keys: action, resource, namespace, name, file_path, output_format, watch_mode.
+        Ensure your response is a valid JSON object with keys: action, resource, namespace (if applicable), name, file_path, output_format, watch_mode.
         """
 
         # GPT-4 API call
