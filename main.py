@@ -134,8 +134,14 @@ def get_container_port(namespace, deployment_name):
 def get_status(namespace, deployment_name):
     """Retrieve the status of a specific deployment."""
     apps_v1 = client.AppsV1Api()
-    deployment = apps_v1.read_namespaced_deployment_status(deployment_name, namespace)
-    return deployment.status.conditions[-1].type
+    try:
+        deployment = apps_v1.read_namespaced_deployment_status(deployment_name, namespace)
+        return deployment.status.conditions[-1].type  # Example: 'Available', 'Progressing'
+    except client.exceptions.ApiException as e:
+        if e.status == 404:
+            return f"Not Available"
+        logging.error(f"Kubernetes API exception: {e}")
+        return f"Kubernetes API exception: {e.reason}"
 
 def get_service_target_port(namespace, service_name):
     """Retrieve the target port for a specific service."""
