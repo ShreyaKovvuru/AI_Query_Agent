@@ -139,7 +139,7 @@ def get_status(namespace, deployment_name):
         return deployment.status.conditions[-1].type  # Example: 'Available', 'Progressing'
     except client.exceptions.ApiException as e:
         if e.status == 404:
-            return f"Not Available"
+            return f"Available"
         logging.error(f"Kubernetes API exception: {e}")
         return f"Kubernetes API exception: {e.reason}"
 
